@@ -8,7 +8,7 @@ async function fecthUserData(url) {
     if (!response.ok) {
         console.error(`Error fetching user data for`);
     }
-    const userInfo = await response.json();
+    const userInfo = response.json();
     return userInfo;
 }
 async function displayUser() {
@@ -30,7 +30,7 @@ formSubmit.addEventListener("submit", async (e) => {
     const searchName = getUserName.value.toLocaleLowerCase();
     try {
         const users = await fecthUserData(url);
-        const matchingUsers = users?.filter((user) => {
+        const matchingUsers = users.filter((user) => {
             return user.login.toLocaleLowerCase().includes(searchName);
         });
         console.log(matchingUsers);

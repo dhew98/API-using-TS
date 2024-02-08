@@ -18,17 +18,17 @@ interface UserData{
 
 
 
-async function fecthUserData(url:string):Promise<UserData[]>{
+async function fecthUserData<T>(url:string):Promise<T>{
     const response=await fetch(url);
     if(!response.ok){
         console.error(`Error fetching user data for`);
     }
-    const userInfo:UserData[]=await response.json();
+    const userInfo=response.json();
     return userInfo;
 }
 
 async function displayUser(){
-    const users= await  fecthUserData(url);
+    const users= await  fecthUserData<UserData[]>(url);
 
         for(let user of users){
                 const userDiv=document.createElement('div');
@@ -52,9 +52,9 @@ formSubmit.addEventListener("submit",async (e)=>{
     const searchName =getUserName.value.toLocaleLowerCase();
 
     try {
-        const users= await  fecthUserData(url);
+        const users:UserData[]= await  fecthUserData(url);
         
-        const matchingUsers = users?.filter((user)=>{
+        const matchingUsers = users.filter((user)=>{
             return user.login.toLocaleLowerCase().includes(searchName);
         })
 
